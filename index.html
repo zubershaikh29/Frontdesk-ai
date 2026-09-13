@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrontDesk AI — bilingual voice receptionist</title>
+<meta name="description" content="A Hindi–English voice agent that answers clinic calls, books appointments into a real calendar, and scores its own call quality.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E9EAE4;
+    --paper-2:#E2E3DC;
+    --ink:#171A18;
+    --muted:#6C716B;
+    --rule:#C9CBC3;
+    --teal:#0F5C4E;
+    --brick:#A33A2C;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.6;
+    font-weight:400;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+  a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(15,92,78,.35);padding-bottom:1px}
+  a:hover{border-bottom-color:var(--teal)}
+  a:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:2px}
+
+  header{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+  h1{font-size:20px;font-weight:600;margin:0;letter-spacing:-0.01em}
+  .byline{font-size:15px;color:var(--muted);margin:0}
+
+  .status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--brick)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--brick);flex:none}
+  @media (prefers-reduced-motion: no-preference){
+    .dot{animation:pulse 2.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  }
+
+  .lede{font-size:21px;line-height:1.5;margin:36px 0 8px;max-width:34em;letter-spacing:-0.01em}
+  .sub{color:var(--muted);margin:0 0 40px;max-width:36em}
+
+  .transcript{background:var(--paper-2);border:1px solid var(--rule);padding:22px 20px;margin:0 0 14px}
+  .turn{display:grid;grid-template-columns:54px 1fr;gap:14px;padding:7px 0}
+  .turn + .turn{border-top:1px solid rgba(201,203,195,.6)}
+  .ts{font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:4px}
+  .who{font-family:var(--mono);font-size:12px;color:var(--muted);display:block;margin-bottom:1px}
+  .said{font-size:16px;line-height:1.5}
+  .agent .said{color:var(--teal)}
+  .tool{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+  @media (prefers-reduced-motion: no-preference){
+    .turn{opacity:0;animation:rise .5s ease-out forwards}
+    @keyframes rise{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  }
+  .caption{font-size:14px;color:var(--muted);margin:0 0 48px}
+
+  h2{font-size:15px;font-weight:600;margin:0 0 14px;letter-spacing:-0.005em}
+  section{margin-bottom:42px}
+
+  dl{margin:0;display:grid;grid-template-columns:180px 1fr;gap:2px 20px}
+  dt{font-weight:500;padding:7px 0}
+  dd{margin:0;padding:7px 0;color:var(--muted)}
+  dt + dd{border-bottom:1px solid rgba(201,203,195,.55)}
+  dt{border-bottom:1px solid rgba(201,203,195,.55)}
+
+  ul.build{list-style:none;margin:0;padding:0}
+  ul.build li{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid rgba(201,203,195,.55)}
+  ul.build li:last-child{border-bottom:0}
+  .mark{font-family:var(--mono);font-size:14px;color:var(--muted);padding-top:2px}
+  .done .mark{color:var(--teal)}
+  .now{font-family:var(--mono);font-size:12px;color:var(--brick);margin-left:8px}
+
+  .stack{color:var(--muted);margin:0}
+
+  footer{border-top:1px solid var(--rule);padding-top:20px;font-size:15px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 22px}
+
+  @media (max-width:560px){
+    .wrap{padding:28px 18px 64px}
+    dl{grid-template-columns:1fr;gap:0}
+    dt{border-bottom:0;padding-bottom:0}
+    dt + dd{padding-top:2px}
+    .turn{grid-template-columns:46px 1fr;gap:10px}
+    .lede{font-size:19px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>FrontDesk AI</h1>
+      <p class="byline">Zuber Shaikh</p>
+    </div>
+    <p class="status"><span class="dot" aria-hidden="true"></span>In development — live demo opens 24 September</p>
+  </header>
+
+  <p class="lede">A voice receptionist that takes clinic calls in Hindi and English, books appointments into a real calendar, and grades its own performance on every call.</p>
+  <p class="sub">Built on Retell AI. Below is a transcript from a development call.</p>
+
+  <div class="transcript">
+    <div class="turn agent" style="animation-delay:.05s">
+      <span class="ts">00:00</span>
+      <span><span class="who">agent</span><span class="said">Sunrise Dental, good afternoon. How can I help you?</span></span>
+    </div>
+    <div class="turn" style="animation-delay:.35s">
+      <span class="ts">00:03</span>
+      <span><span class="who">caller</span><span class="said">Haan, mujhe kal evening ka appointment chahiye, cleaning ke liye.</span></span>
+    </div>
+    <div class="turn" style="animation-delay:.65s">
+      <span class="ts">00:07</span>
+      <span><span class="who">tool call</span><span class="said tool">check_availability(date: 2026-09-14, after: "17:00", duration: 30)</span></span>
+    </div>
+    <div class="turn agent" style="animation-delay:.95s">
+      <span class="ts">00:08</span>
+      <span><span class="who">agent</span><span class="said">Kal shaam ko 5:30 aur 6:15 free hai. Kaunsa theek rahega?</span></span>
+    </div>
+    <div class="turn" style="animation-delay:1.25s">
+      <span class="ts">00:12</span>
+      <span><span class="who">caller</span><span class="said">6:15 kar dijiye.</span></span>
+    </div>
+    <div class="turn" style="animation-delay:1.55s">
+      <span class="ts">00:14</span>
+      <span><span class="who">tool call</span><span class="said tool">book_appointment(slot: 18:15, name: …, phone: …) → confirmed</span></span>
+    </div>
+    <div class="turn agent" style="animation-delay:1.85s">
+      <span class="ts">00:16</span>
+      <span><span class="who">agent</span><span class="said">Done — kal 6:15 pm. Confirmation WhatsApp par bhej diya hai.</span></span>
+    </div>
+  </div>
+  <p class="caption">The caller switches language mid-sentence. Handling that without dropping the booking is most of the work.</p>
+
+  <section>
+    <h2>What it does</h2>
+    <dl>
+      <dt>Answers in two languages</dt>
+      <dd>Hindi and English, including callers who mix both in one sentence</dd>
+      <dt>Books for real</dt>
+      <dd>Reads live availability and writes to Google Calendar, with slot locking so two callers can't take the same time</dd>
+      <dt>Knows when to stop</dt>
+      <dd>Hands off to a human on repeated failure, frustration, or direct request — with a written summary of the call so far</dd>
+      <dt>Grades every call</dt>
+      <dd>A judge model scores each transcript on six dimensions and flags the bad ones for review</dd>
+      <dt>Tests without calling</dt>
+      <dd>Caller personas replay against the agent in text, so prompt changes get checked in CI instead of over the phone</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Build status</h2>
+    <ul class="build">
+      <li class="done"><span class="mark">✓</span><span>Agent configuration and voice tuning</span></li>
+      <li class="done"><span class="mark">✓</span><span>Tool-calling endpoints for availability and booking</span></li>
+      <li><span class="mark">→</span><span>Google Calendar integration<span class="now">in progress</span></span></li>
+      <li><span class="mark">·</span><span>Browser demo you can talk to</span></li>
+      <li><span class="mark">·</span><span>Call quality scoring and dashboard</span></li>
+      <li><span class="mark">·</span><span>Text-mode regression suite</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Stack</h2>
+    <p class="stack">TypeScript · Next.js · Retell AI · Postgres · Google Calendar API · Vercel</p>
+  </section>
+
+  <footer>
+    <span><a href="https://github.com/YOUR-USERNAME/frontdesk-ai">Source on GitHub</a></span>
+    <span><a href="mailto:work.zubershaikh@gmail.com">work.zubershaikh@gmail.com</a></span>
+    <span><a href="https://linkedin.com/in/YOUR-LINKEDIN">LinkedIn</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
